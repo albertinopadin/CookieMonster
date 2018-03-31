@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+
+  "name": "CookieMonster",
+  "description": "This extension will allow erasing a specific site's cookies",
+  "version": "1.0",
+
+  "browser_action": {
+   "default_icon": "cookiemonster_128.png",
+   "default_popup": "popup.html"
+  },
+
+  "background": {
+    "scripts": ["deleteCookies.js"]
+  },
+
+  "icons": { 
+    "16": "cookiemonster_16.png",
+    "48": "cookiemonster_48.png",
+    "128": "cookiemonster_128.png" 
+  },
+
+  "permissions": [ "activeTab", "cookies", "storage", "tabs", "http://*/*", "https://*/*" ]
+}

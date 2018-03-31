@@ -1,0 +1,17 @@
+button {
+  margin: auto;
+  height: 30px;
+  width: 150px;
+}
+
+input {
+  margin: auto;
+  height: 20px;
+  width: 145px;
+}
+
+h3 {
+  margin: auto;
+  color: blue;
+  padding-bottom: 10px;
+}
