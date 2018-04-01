@@ -11,7 +11,7 @@
   },
 
   "background": {
-    "scripts": ["deleteCookies.js"]
+    "scripts": ["background.js"]
   },
 
   "icons": { 
