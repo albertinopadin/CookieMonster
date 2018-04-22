@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
   let deleteCookiesButton = document.getElementById('delete-cookies-button');
   let domainTextBox = document.getElementById('domain-text-box');
   let cookieListElem = document.getElementById('cookie-list');
-  let cookies = [];
 
   searchCookiesButton.onclick = element => {
     let message = {
@@ -13,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     chrome.runtime.sendMessage(message, (response) => {
       console.log("Found cookies: " + JSON.stringify(response.cookies));
-      cookies = response.cookies;
+      let cookies = response.cookies;
       for(var i=0; i<cookies.length; i++) {
         console.log(JSON.stringify(cookies[i]));
         var li = document.createElement("li");
@@ -24,13 +23,32 @@ document.addEventListener("DOMContentLoaded", function(event) {
   }
 
   deleteCookiesButton.onclick = element => {
+    getCookies(domainTextBox.value, (cookies) => {
+      console.log("(deleteCookiesButton) Found cookies: " + JSON.stringify(cookies));
+
+      let message = {
+        action: 'deleteCookies',
+        cookies: cookies
+      };
+  
+      chrome.runtime.sendMessage(message, (response) => {
+        console.log("Cookies Removed: " + JSON.stringify(response));
+      });
+    });
+  }
+
+
+
+  function getCookies(searchTerm, callback) {
     let message = {
-      action: 'deleteCookies',
-      cookies: cookies
+      action: 'getAllCookies',
+      searchTerm: searchTerm
     };
 
-    chrome.runtime.sendMessage(message, () => {
-
+    chrome.runtime.sendMessage(message, (response) => {
+      // console.log("(getCookies) Found cookies: " + JSON.stringify(response.cookies));
+      cookies = response.cookies;
+      callback(cookies);
     });
   }
 

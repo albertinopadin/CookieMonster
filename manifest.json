@@ -20,5 +20,5 @@
     "128": "cookiemonster_128.png" 
   },
 
-  "permissions": [ "activeTab", "cookies", "storage", "tabs", "http://*/*", "https://*/*" ]
+  "permissions": [ "activeTab", "cookies", "storage", "tabs", "http://*/*", "https://*/*", "https://www.youtube.com" ]
 }

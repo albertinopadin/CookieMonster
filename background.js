@@ -1,5 +1,7 @@
-let domainPrefix = "www."
-let domainSuffix = ".com"
+let wwwPrefix = "www";
+let domainPrefix = wwwPrefix + ".";
+let domainSuffix = ".com";
+let httpsPrefix = "https://";
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
@@ -44,10 +46,46 @@ chrome.runtime.onMessage.addListener(
 
     // ::DELETE COOKIES::
     if (request.action == "deleteCookies") {
-      for (cookie in request.cookies) {
-        console.log("Deleting cookie: " + cookie.name + " in domain: " + cookie.domain);
-        chrome.cookies.remove({name: cookie.name});
+      var cookiesRemoved = [];
+      var cookieArray = request.cookies;
+
+      for(var i=0; i<cookieArray.length; i++) {
+        cookieUrl = cookieArray[i].domain;
+        if (cookieUrl.startsWith(".")) {
+          cookieUrl = httpsPrefix + wwwPrefix + cookieUrl;
+        }
+
+        if (cookieUrl.startsWith("www.")) {
+          cookieUrl = httpsPrefix + cookieUrl;
+        }
+
+        chrome.cookies.remove({
+          name: cookieArray[i].name,
+          url: cookieUrl
+        }, (details) => {
+          var removed = {};
+          count++;
+
+          if (details == null) {
+            removed = {
+              // error: browser.runtime.lastError
+              error: "There was some sort of error."
+            };
+          } else {
+            removed = {
+              details: details
+            };
+          }
+
+          cookiesRemoved.push(removed);
+        });
       }
+
+      sendResponse({
+        cookiesRemoved: cookiesRemoved
+      });
+
+      return true;
     }
   }
 );
