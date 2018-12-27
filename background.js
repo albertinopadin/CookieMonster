@@ -64,8 +64,6 @@ chrome.runtime.onMessage.addListener(
           url: cookieUrl
         }, (details) => {
           var removed = {};
-          count++;
-
           if (details == null) {
             removed = {
               // error: browser.runtime.lastError

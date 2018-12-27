@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   let deleteCookiesButton = document.getElementById('delete-cookies-button');
   let domainTextBox = document.getElementById('domain-text-box');
   let cookieListElem = document.getElementById('cookie-list');
+  let resultDiv = document.getElementById('result-div');
 
   searchCookiesButton.onclick = element => {
     let message = {
@@ -33,6 +34,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
   
       chrome.runtime.sendMessage(message, (response) => {
         console.log("Cookies Removed: " + JSON.stringify(response));
+        // Put something in the UI to let user know:
+        var result = "";
+        if (response.error) {
+          result = "Error";
+        } else {
+          result = "Successfully removed cookies!";
+        }
+        resultDiv.appendChild(document.createTextNode(result));
       });
     });
   }

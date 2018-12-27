@@ -1,3 +1,7 @@
+body {
+  background-color: whitesmoke;
+}
+
 button {
   margin: auto;
   height: 30px;
@@ -14,4 +18,9 @@ h3 {
   margin: auto;
   color: blue;
   padding-bottom: 10px;
+}
+
+#result-div {
+  margin-top: 5px;
+  font-weight: bold;
 }
