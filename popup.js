@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         if (response.error) {
           result = "Error";
         } else {
-          result = "Successfully removed cookies!";
+          result = "Successfully removed " + cookies.length + " cookies!";
         }
         resultDiv.appendChild(document.createTextNode(result));
       });
