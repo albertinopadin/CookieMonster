@@ -28,7 +28,6 @@ chrome.runtime.onMessage.addListener(
         baseDomain = fullDomain.replace(domainPrefix, '');
       }
 
-
       chrome.cookies.getAll({ domain: baseDomain }, function(cookies) {
         console.log("Got all cookies from domain: " + baseDomain + ", size: " + cookies.length);
         cookiesFound = cookiesFound.concat(cookies);
