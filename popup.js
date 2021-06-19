@@ -69,12 +69,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
       let filteredCookies = cookies.filter(cookie => 
         cookie.domain.startsWith(searchTerm) ||
         cookie.domain.startsWith("." + searchTerm) ||
-        cookie.domain.startsWith("www." + searchTerm)
+        cookie.domain.startsWith("www." + searchTerm) ||
+        cookie.domain.startsWith("https://" + searchTerm) ||
+        cookie.domain.startsWith("https://www." + searchTerm)
       );
       // console.log("Filtered Cookies: " + JSON.stringify(filteredCookies));
-      let possibleDomains = [...new Set(filteredCookies.map(cookie => cookie.domain))];
+      let possibleDomains = [...new Set(filteredCookies.map(cookie => getCookieDomain(cookie)))];
       callback(possibleDomains);
     });
+  }
+
+  function getCookieDomain(cookie) {
+    var domain = cookie.domain.replace('www.', '').replace('.com', '');
+    if (domain.startsWith('.')) {
+      domain = domain.slice(1);
+    }
+    return domain;
   }
 
   function getCookies(searchTerm, callback) {
