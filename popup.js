@@ -4,13 +4,32 @@ document.addEventListener("DOMContentLoaded", function(event) {
   let domainTextBox = document.getElementById('domain-text-box');
   let cookieListElem = document.getElementById('cookie-list');
   let resultDiv = document.getElementById('result-div');
+  let autocompleteSuggestions = document.getElementById("autocomplete-suggestions");
+
+  function hasDomainInTextbox(domains) {
+    var hasDomain = false;
+    domains.forEach((d) => {
+      if (domainTextBox.value.trim() == d) {
+        hasDomain = true;
+      }
+    });
+    return hasDomain;
+  }
 
   domainTextBox.oninput = element => {
     // Autocomplete
     if (domainTextBox.value.trim().length > 2) {
-      console.log("Domain text: " + domainTextBox.value);
       getPossibleDomains(domainTextBox.value, (domains) => {
         console.log("Found domains: " + JSON.stringify(domains));
+        autocompleteSuggestions.innerHTML = '';
+        if (!hasDomainInTextbox(domains)) {
+          domains.map((d) => {
+            let op = document.createElement('option');
+            op.value = d;
+            op.innerHTML = d;
+            autocompleteSuggestions.appendChild(op)
+          });
+        }
       });
     }
   };
