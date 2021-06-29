@@ -6,6 +6,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
   let resultDiv = document.getElementById('result-div');
   let autocompleteSuggestions = document.getElementById("autocomplete-suggestions");
 
+
+  let message = {
+    action: 'getTabUrl'
+  };
+
+  chrome.runtime.sendMessage(message, (url) => {
+    console.log("Current tab URL: " + JSON.stringify(url));
+  });
+
+
   function hasDomainInTextbox(domains) {
     var hasDomain = false;
     domains.forEach((d) => {

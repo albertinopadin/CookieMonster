@@ -5,6 +5,23 @@ let httpsPrefix = "https://";
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
+    // ::GET CURRENT TAB URL::
+    if (request.action == "getTabUrl") {
+      chrome.tabs.query({'active': true, 'lastFocusedWindow': true, 'currentWindow': true}, function (tabs) {
+        var url = tabs[0].url;
+        console.log(url);
+        sendResponse({
+          tabUrl: url
+        });
+      });
+
+      // From: https://developer.chrome.com/docs/extensions/reference/tabs/
+      // let queryOptions = { active: true, currentWindow: true };
+      // let [tab] = await chrome.tabs.query(queryOptions);
+      // return tab.url;
+
+      return true;
+    }
 
     // ::GET ALL COOKIES::
     if (request.action == "getAllCookies") {
