@@ -6,13 +6,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
   let resultDiv = document.getElementById('result-div');
   let autocompleteSuggestions = document.getElementById("autocomplete-suggestions");
 
-
   let message = {
     action: 'getTabUrl'
   };
 
-  chrome.runtime.sendMessage(message, (url) => {
-    console.log("Current tab URL: " + JSON.stringify(url));
+  chrome.runtime.sendMessage(message, (response) => {
+    console.log("Current tab URL: " + response.tabUrl);
+    let tabUrl = new URL(response.tabUrl);
+    let tabHost = tabUrl.host;
+    let tabDomain = getDomainFromUrl(tabHost);
+    console.log("Tab Domain: " + tabDomain);
+    domainTextBox.placeholder = tabDomain;
   });
 
 
@@ -108,8 +112,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
   }
 
+  function getDomainFromUrl(url) {
+    return url.replace('www.', '')
+              .replace('.com', '')
+              .replace('.org', '')
+              .replace('.gov', '')
+              .replace('.info', '');
+  }
+
   function getCookieDomain(cookie) {
-    var domain = cookie.domain.replace('www.', '').replace('.com', '');
+    var domain = getDomainFromUrl(cookie.domain);
     if (domain.startsWith('.')) {
       domain = domain.slice(1);
     }
