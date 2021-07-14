@@ -30,6 +30,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
     return hasDomain;
   }
 
+  domainTextBox.onkeydown = event => {
+    if(event.key === 'Tab') {
+      domainTextBox.value = domainTextBox.placeholder;
+    }
+  }
+
   domainTextBox.oninput = element => {
     // Autocomplete
     if (domainTextBox.value.trim().length > 2) {
