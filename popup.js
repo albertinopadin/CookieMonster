@@ -31,8 +31,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
   }
 
   domainTextBox.onkeydown = event => {
-    if(event.key === 'Tab') {
+    if(event.key === 'Tab' && domainTextBox.value.trim().length == 0) {
       domainTextBox.value = domainTextBox.placeholder;
+      event.preventDefault();
     }
   }
 
