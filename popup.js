@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     let tabHost = tabUrl.host;
     let tabDomain = getDomainFromUrl(tabHost);
     console.log("Tab Domain: " + tabDomain);
-    domainTextBox.placeholder = tabDomain;
+    domainTextBox.value = tabDomain;
   });
 
 
@@ -30,12 +30,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
     return hasDomain;
   }
 
-  domainTextBox.onkeydown = event => {
-    if(event.key === 'Tab' && domainTextBox.value.trim().length == 0) {
-      domainTextBox.value = domainTextBox.placeholder;
-      event.preventDefault();
-    }
-  }
+  // domainTextBox.onkeydown = event => {
+  //   if(event.key === 'Tab' && domainTextBox.value.trim().length == 0) {
+  //     domainTextBox.value = domainTextBox.placeholder;
+  //     event.preventDefault();
+  //   }
+  // }
 
   domainTextBox.oninput = element => {
     // Autocomplete
